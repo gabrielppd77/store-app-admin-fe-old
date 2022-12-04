@@ -5,13 +5,20 @@ export interface FormLogin {
   password: string;
 }
 
-const initialAuthContext = {
+const authContext = {
   isAuthenticated: false,
   isLoading: false,
-  login: async (data: FormLogin) => {},
-  logout: () => {},
+  login: async () => undefined,
+  logout: () => undefined,
 };
 
-const AuthContext = createContext(initialAuthContext);
+interface initialAuthContext {
+  isAuthenticated: boolean;
+  isLoading: boolean;
+  login: (data: FormLogin) => Promise<void>;
+  logout: () => void;
+}
+
+const AuthContext = createContext(authContext as initialAuthContext);
 
 export default AuthContext;

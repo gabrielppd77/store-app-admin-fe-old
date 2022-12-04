@@ -56,8 +56,9 @@ export default function Register() {
       await api.post("/user/create", data);
       delete data.name;
       await login(data);
-    } catch (error: FixMeLater) {
-      alert.extractError(error);
+      notification.success("Usuário criado com sucesso!");
+    } catch (error) {
+      alert.extractError(error as FixMeLater);
     } finally {
       setLoading(false);
     }

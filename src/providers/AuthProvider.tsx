@@ -23,7 +23,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
   function logout() {
     for (let i = 0; i < localStorage.length; i++) {
-      let key = localStorage.key(i);
+      const key = localStorage.key(i);
       if (key?.startsWith(nameAppStorage())) {
         localStorage.removeItem(key);
       }
@@ -60,8 +60,8 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
       notification.success("Seja bem vindo!");
       navigate("/dashboard");
-    } catch (error: FixMeLater) {
-      alert.extractError(error);
+    } catch (error) {
+      alert.extractError(error as FixMeLater);
     } finally {
       setLoading(false);
     }

@@ -24,7 +24,9 @@ export default function useAlert() {
         statusCode: number;
       };
 
-      let title = `${data.statusCode} ${data.message}`;
+      let title = data?.statusCode
+        ? `${data.statusCode} ${data.message}`
+        : undefined;
       let text = undefined;
 
       if (data?.error) {
