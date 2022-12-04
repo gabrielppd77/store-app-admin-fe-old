@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-import useNotification from "@hooks/useNotification";
 import useAlert from "@hooks/useAlert";
 import useAuth from "@hooks/useAuth";
 
@@ -47,7 +46,6 @@ export default function Register() {
   const alert = useAlert();
   const { login } = useAuth();
   const navigate = useNavigate();
-  const notification = useNotification();
 
   async function onSubmit(data: FormFields) {
     setLoading(true);
@@ -56,7 +54,6 @@ export default function Register() {
       await api.post("/user/create", data);
       delete data.name;
       await login(data);
-      notification.success("Usuário criado com sucesso!");
     } catch (error) {
       alert.extractError(error as FixMeLater);
     } finally {
