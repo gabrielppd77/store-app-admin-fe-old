@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { Grid, TextField, Paper, Typography, Button } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
@@ -7,15 +5,12 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-import useAlert from "@hooks/useAlert";
-import useAuth from "@hooks/useAuth";
+import { useAuthContext } from "@hooks/useAuth";
 
-import { FixMeLater } from "@services/FixeMeLater";
-import api from "@services/api";
 import * as yup from "yup";
 
 interface FormFields {
-  name?: string;
+  name: string;
   email: string;
   password: string;
   passwordConfirmation?: string;
@@ -41,24 +36,12 @@ export default function Register() {
     formState: { errors },
   } = useForm<FormFields>({ resolver: yupResolver(schema) });
 
-  const [isLoading, setLoading] = useState(false);
-
-  const alert = useAlert();
-  const { login } = useAuth();
+  const { isLoading, userCreate } = useAuthContext();
   const navigate = useNavigate();
 
-  async function onSubmit(data: FormFields) {
-    setLoading(true);
-    try {
-      delete data.passwordConfirmation;
-      await api.post("/user/create", data);
-      delete data.name;
-      await login(data);
-    } catch (error) {
-      alert.extractError(error as FixMeLater);
-    } finally {
-      setLoading(false);
-    }
+  function onSubmit(data: FormFields) {
+    delete data.passwordConfirmation;
+    userCreate(data);
   }
 
   return (

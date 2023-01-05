@@ -8,17 +8,19 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
-import useAuth from "@hooks/useAuth";
+import { useAuthContext } from "@hooks/useAuth";
 
 import { nameApp } from "@services/utils";
 
 function UnthenticatedLayout() {
   const navigate = useNavigate();
 
-  const { logout } = useAuth();
+  const { userLogout, setAuthenticated } = useAuthContext();
 
   useEffect(() => {
-    logout();
+    userLogout();
+    setAuthenticated(false);
+    navigate("/");
   }, []);
 
   return (

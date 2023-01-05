@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import { Box } from "@mui/material";
 
-import useAuth from "@hooks/useAuth";
+import { useAuthContext } from "@hooks/useAuth";
 import useMenuStore from "@stores/useMenuStore";
 
 import Header from "./components/Header";
@@ -40,7 +40,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 export default function AuthenticatedLayout() {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuthContext();
   const { isOpenMenu } = useMenuStore();
 
   if (!isAuthenticated) {

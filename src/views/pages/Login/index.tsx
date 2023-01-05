@@ -5,10 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
-import useAuth from "@hooks/useAuth";
+import { FormUserLogin, useAuthContext } from "@hooks/useAuth";
 import { yupResolver } from "@hookform/resolvers/yup";
-
-import { FormLogin } from "@contexts/AuthContext";
 
 const schema = yup.object({
   email: yup
@@ -20,13 +18,13 @@ const schema = yup.object({
 
 export default function Login() {
   const navigate = useNavigate();
-  const { isLoading, login } = useAuth();
+  const { isLoading, userAuthenticate } = useAuthContext();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormLogin>({
+  } = useForm<FormUserLogin>({
     resolver: yupResolver(schema),
   });
 
@@ -42,7 +40,7 @@ export default function Login() {
         mt: 6,
       }}
     >
-      <form onSubmit={handleSubmit(login)}>
+      <form onSubmit={handleSubmit(userAuthenticate)}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Typography variant="h6" align="center" pb={1} color="secondary">
